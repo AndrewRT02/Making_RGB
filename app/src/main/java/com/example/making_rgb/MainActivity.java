@@ -6,6 +6,7 @@ import android.graphics.Interpolator;
 import android.os.Bundle;
 import android.text.style.BackgroundColorSpan;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SeekBar;
@@ -19,6 +20,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -37,6 +39,12 @@ public class MainActivity extends AppCompatActivity {
     SeekBar sb_j_blueSeekBar;
 
     ListView lv_j_colorList;
+
+    Button btn_j_saveColor;
+
+    static ArrayList<Color> listOfColors;
+
+    ColorListAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -57,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
         sb_j_greenSeekBar = findViewById(R.id.sb_v_greenSeekbar);
         sb_j_blueSeekBar = findViewById(R.id.sb_v_blueSeekbar);
         lv_j_colorList = findViewById(R.id.lv_v_colorList);
+        btn_j_saveColor = findViewById(R.id.btn_v_saveColor);
 
         sb_j_redSeekBar.setMax(255);
         sb_j_greenSeekBar.setMax(255);
@@ -64,8 +73,17 @@ public class MainActivity extends AppCompatActivity {
 
         seekBarChangeListener();
 
+        if(listOfColors.size() != 0)
+        {
+            Color newColor = new Color(Integer.valueOf(et_j_redHexNum.getText().toString()), Integer.valueOf(et_j_greenHexNum.getText().toString()), Integer.valueOf(et_j_blueHexNum.getText().toString()));
+            listOfColors.add(newColor);
+        }
+        else
+        {
+            addDummyDataToList();
+        }
 
-
+        fillListView();
     }
 
 private void seekBarChangeListener()
@@ -203,5 +221,36 @@ private void seekBarChangeListener()
             lbl_j_hexLabel.setTextColor(Color.BLACK);
             et_j_hexCode.setTextColor(Color.BLACK);
         }
+    }
+
+    private void addColorButtonListener()
+    {
+        btn_j_saveColor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String red = et_j_redHexNum.getText().toString();
+                String green = et_j_greenHexNum.getText().toString();
+                String blue = et_j_blueHexNum.getText().toString();
+
+                Color newColor = new Color();
+
+
+            }
+        });
+    }
+
+    private void fillListView()
+    {
+        adapter = new ColorListAdapter(this, listOfColors);
+        lv_j_colorList.setAdapter(adapter);
+    }
+
+    private void addDummyDataToList()
+    {
+        Color newColor = new Color(255, 25, 65);
+        listOfColors.add(newColor);
+
+        newColor = new Color(156, 63, 1);
+        listOfColors.add(newColor);
     }
 }
