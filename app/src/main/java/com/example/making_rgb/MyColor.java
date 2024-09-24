@@ -2,18 +2,18 @@ package com.example.making_rgb;
 
 import java.io.Serializable;
 
-public class Color implements Serializable
+public class MyColor implements Serializable
 {
     int red;
     int green;
     int blue;
 
-    public Color()
+    public MyColor()
     {
 
     }
 
-    public Color(int r, int g, int b)
+    public MyColor(int r, int g, int b)
     {
         red = r;
         green = g;
@@ -43,4 +43,5 @@ public class Color implements Serializable
     public void setBlue(int blue) {
         this.blue = blue;
     }
+    
 }

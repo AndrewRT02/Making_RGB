@@ -5,11 +5,13 @@ import android.graphics.ColorSpace;
 import android.graphics.Interpolator;
 import android.os.Bundle;
 import android.text.style.BackgroundColorSpan;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SeekBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -22,6 +24,7 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -42,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
     Button btn_j_saveColor;
 
-    static ArrayList<Color> listOfColors;
+    static ArrayList<MyColor> listOfColors;
 
     ColorListAdapter adapter;
 
@@ -71,18 +74,20 @@ public class MainActivity extends AppCompatActivity {
         sb_j_greenSeekBar.setMax(255);
         sb_j_blueSeekBar.setMax(255);
 
+        listOfColors = new ArrayList<MyColor>();
+
         seekBarChangeListener();
 
         if(listOfColors.size() != 0)
         {
-            Color newColor = new Color(Integer.valueOf(et_j_redHexNum.getText().toString()), Integer.valueOf(et_j_greenHexNum.getText().toString()), Integer.valueOf(et_j_blueHexNum.getText().toString()));
+            MyColor newColor = new MyColor(Integer.valueOf(et_j_redHexNum.getText().toString()), Integer.valueOf(et_j_greenHexNum.getText().toString()), Integer.valueOf(et_j_blueHexNum.getText().toString()));
             listOfColors.add(newColor);
         }
         else
         {
             addDummyDataToList();
         }
-
+        addColorButtonListener();
         fillListView();
     }
 
@@ -93,11 +98,21 @@ private void seekBarChangeListener()
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 et_j_redHexNum.setText(String.valueOf(i));
 
-                changeTextColor(i);
-
                 int redHexValue = Integer.parseInt(et_j_redHexNum.getText().toString());
                 int greenHexValue = Integer.parseInt(et_j_greenHexNum.getText().toString());
                 int blueHexValue = Integer.parseInt(et_j_blueHexNum.getText().toString());
+
+                int textColor;
+                textColor = makeTextColor(redHexValue, greenHexValue, blueHexValue);
+
+                lbl_j_redLabel.setTextColor(textColor);
+                et_j_redHexNum.setTextColor(textColor);
+                lbl_j_greenLabel.setTextColor(textColor);
+                et_j_greenHexNum.setTextColor(textColor);
+                lbl_j_blueLabel.setTextColor(textColor);
+                et_j_blueHexNum.setTextColor(textColor);
+                lbl_j_hexLabel.setTextColor(textColor);
+                et_j_hexCode.setTextColor(textColor);
 
                 int hexNum;
 
@@ -125,11 +140,23 @@ private void seekBarChangeListener()
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 et_j_greenHexNum.setText(String.valueOf(i));
 
-                changeTextColor(i);
+                //changeTextColor(i);
 
                 int redHexValue = Integer.parseInt(et_j_redHexNum.getText().toString());
                 int greenHexValue = Integer.parseInt(et_j_greenHexNum.getText().toString());
                 int blueHexValue = Integer.parseInt(et_j_blueHexNum.getText().toString());
+
+                int textColor;
+                textColor = makeTextColor(redHexValue, greenHexValue, blueHexValue);
+
+                lbl_j_redLabel.setTextColor(textColor);
+                et_j_redHexNum.setTextColor(textColor);
+                lbl_j_greenLabel.setTextColor(textColor);
+                et_j_greenHexNum.setTextColor(textColor);
+                lbl_j_blueLabel.setTextColor(textColor);
+                et_j_blueHexNum.setTextColor(textColor);
+                lbl_j_hexLabel.setTextColor(textColor);
+                et_j_hexCode.setTextColor(textColor);
 
                 int hexNum;
 
@@ -165,6 +192,18 @@ private void seekBarChangeListener()
                 int greenHexValue = Integer.parseInt(et_j_greenHexNum.getText().toString());
                 int blueHexValue = Integer.parseInt(et_j_blueHexNum.getText().toString());
 
+                int textColor;
+                textColor = makeTextColor(redHexValue, greenHexValue, blueHexValue);
+
+                lbl_j_redLabel.setTextColor(textColor);
+                et_j_redHexNum.setTextColor(textColor);
+                lbl_j_greenLabel.setTextColor(textColor);
+                et_j_greenHexNum.setTextColor(textColor);
+                lbl_j_blueLabel.setTextColor(textColor);
+                et_j_blueHexNum.setTextColor(textColor);
+                lbl_j_hexLabel.setTextColor(textColor);
+                et_j_hexCode.setTextColor(textColor);
+
                 int hexNum;
 
                 hexNum = Color.rgb(redHexValue, greenHexValue, blueHexValue);
@@ -199,7 +238,7 @@ private void seekBarChangeListener()
 
     private void changeTextColor(int i)
     {
-        if(i < 75)
+        /*if(i < 75)
         {
             lbl_j_redLabel.setTextColor(Color.WHITE);
             et_j_redHexNum.setTextColor(Color.WHITE);
@@ -220,7 +259,7 @@ private void seekBarChangeListener()
             et_j_blueHexNum.setTextColor(Color.BLACK);
             lbl_j_hexLabel.setTextColor(Color.BLACK);
             et_j_hexCode.setTextColor(Color.BLACK);
-        }
+        } */
     }
 
     private void addColorButtonListener()
@@ -228,13 +267,15 @@ private void seekBarChangeListener()
         btn_j_saveColor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String red = et_j_redHexNum.getText().toString();
-                String green = et_j_greenHexNum.getText().toString();
-                String blue = et_j_blueHexNum.getText().toString();
+                int red = Integer.valueOf(et_j_redHexNum.getText().toString());
+                int green = Integer.valueOf(et_j_greenHexNum.getText().toString());
+                int blue = Integer.valueOf(et_j_blueHexNum.getText().toString());
 
-                Color newColor = new Color();
+                MyColor newColor = new MyColor(red, green, blue);
 
-
+                listOfColors.add(newColor);
+                adapter.notifyDataSetChanged();
+                Log.d("Color Call", "Called");
             }
         });
     }
@@ -247,10 +288,17 @@ private void seekBarChangeListener()
 
     private void addDummyDataToList()
     {
-        Color newColor = new Color(255, 25, 65);
+        MyColor newColor = new MyColor(255, 25, 65);
         listOfColors.add(newColor);
 
-        newColor = new Color(156, 63, 1);
+        newColor = new MyColor(156, 63, 1);
         listOfColors.add(newColor);
+    }
+
+    private int makeTextColor(int red, int green, int blue)
+    {
+        //return Color.rgb(255 - red, 255 - green, 255 - blue);
+        return (127 < ((red + green + blue) / 3)) ? Color.WHITE : Color.BLACK;
+        //int x = (y < z) ? a : b;
     }
 }
