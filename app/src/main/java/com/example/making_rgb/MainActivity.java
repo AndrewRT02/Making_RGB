@@ -228,6 +228,7 @@ private void seekBarChangeListener()
             }
         });
 
+        //Show the selected colors and where the seekbars are to make it
         lv_j_colorList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -263,6 +264,7 @@ private void seekBarChangeListener()
         bg.setBackgroundColor(hex);
     }
 
+    //Simply change the text boxes text color
     private void changeTextColorBack(int x)
     {
             lbl_j_redLabel.setTextColor(x);
@@ -275,6 +277,7 @@ private void seekBarChangeListener()
             et_j_hexCode.setTextColor(x);
     }
 
+    //Saves the colors in the list and resets the seekbars and numbers and hex code
     private void addColorButtonListener()
     {
         btn_j_saveColor.setOnClickListener(new View.OnClickListener() {
@@ -301,12 +304,14 @@ private void seekBarChangeListener()
         });
     }
 
+    //adapter
     private void fillListView()
     {
         adapter = new ColorListAdapter(this, listOfColors);
         lv_j_colorList.setAdapter(adapter);
     }
 
+    //Just add some data to the list
     private void addDummyDataToList()
     {
         ColorInfo newColor = new ColorInfo(255, 25, 65);
@@ -316,6 +321,7 @@ private void seekBarChangeListener()
         listOfColors.add(newColor);
     }
 
+    //Make the color and this will choose whether the text color will be black or white
     private int makeTextColor(int red, int green, int blue)
     {
         //return Color.rgb(255 - red, 255 - green, 255 - blue);
