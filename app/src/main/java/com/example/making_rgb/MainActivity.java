@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.text.style.BackgroundColorSpan;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -45,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
     Button btn_j_saveColor;
 
-    static ArrayList<MyColor> listOfColors;
+    static ArrayList<ColorInfo> listOfColors;
 
     ColorListAdapter adapter;
 
@@ -68,19 +69,20 @@ public class MainActivity extends AppCompatActivity {
         sb_j_greenSeekBar = findViewById(R.id.sb_v_greenSeekbar);
         sb_j_blueSeekBar = findViewById(R.id.sb_v_blueSeekbar);
         lv_j_colorList = findViewById(R.id.lv_v_colorList);
+        lv_j_colorList.setClickable(true);
         btn_j_saveColor = findViewById(R.id.btn_v_saveColor);
 
         sb_j_redSeekBar.setMax(255);
         sb_j_greenSeekBar.setMax(255);
         sb_j_blueSeekBar.setMax(255);
 
-        listOfColors = new ArrayList<MyColor>();
+        listOfColors = new ArrayList<ColorInfo>();
 
         seekBarChangeListener();
 
         if(listOfColors.size() != 0)
         {
-            MyColor newColor = new MyColor(Integer.valueOf(et_j_redHexNum.getText().toString()), Integer.valueOf(et_j_greenHexNum.getText().toString()), Integer.valueOf(et_j_blueHexNum.getText().toString()));
+            ColorInfo newColor = new ColorInfo(Integer.valueOf(et_j_redHexNum.getText().toString()), Integer.valueOf(et_j_greenHexNum.getText().toString()), Integer.valueOf(et_j_blueHexNum.getText().toString()));
             listOfColors.add(newColor);
         }
         else
@@ -186,7 +188,7 @@ private void seekBarChangeListener()
 
                 et_j_blueHexNum.setText(String.valueOf(i));
 
-                changeTextColor(i);
+                //changeTextColor(i);
 
                 int redHexValue = Integer.parseInt(et_j_redHexNum.getText().toString());
                 int greenHexValue = Integer.parseInt(et_j_greenHexNum.getText().toString());
@@ -226,7 +228,32 @@ private void seekBarChangeListener()
             }
         });
 
+        lv_j_colorList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
+                ColorInfo getColor = (ColorInfo) adapter.getItem(i);
+
+                int oldRed = getColor.getRed();
+                int oldGreen = getColor.getGreen();
+                int oldBlue = getColor.getBlue();
+
+                et_j_redHexNum.setText(String.valueOf(oldRed));
+                et_j_greenHexNum.setText(String.valueOf(oldGreen));
+                et_j_blueHexNum.setText(String.valueOf(oldBlue));
+
+                int text = makeTextColor(oldRed, oldGreen, oldBlue);
+                changeTextColorBack(text);
+
+                sb_j_redSeekBar.setProgress(oldRed);
+                sb_j_greenSeekBar.setProgress(oldGreen);
+                sb_j_blueSeekBar.setProgress(oldBlue);
+
+                Log.d("Got item:", "12");
+
+
+            }
+        });
 
     }
 
@@ -236,30 +263,16 @@ private void seekBarChangeListener()
         bg.setBackgroundColor(hex);
     }
 
-    private void changeTextColor(int i)
+    private void changeTextColorBack(int x)
     {
-        /*if(i < 75)
-        {
-            lbl_j_redLabel.setTextColor(Color.WHITE);
-            et_j_redHexNum.setTextColor(Color.WHITE);
-            lbl_j_greenLabel.setTextColor(Color.WHITE);
-            et_j_greenHexNum.setTextColor(Color.WHITE);
-            lbl_j_blueLabel.setTextColor(Color.WHITE);
-            et_j_blueHexNum.setTextColor(Color.WHITE);
-            lbl_j_hexLabel.setTextColor(Color.WHITE);
-            et_j_hexCode.setTextColor(Color.WHITE);
-        }
-        else
-        {
-            lbl_j_redLabel.setTextColor(Color.BLACK);
-            et_j_redHexNum.setTextColor(Color.BLACK);
-            lbl_j_greenLabel.setTextColor(Color.BLACK);
-            et_j_greenHexNum.setTextColor(Color.BLACK);
-            lbl_j_blueLabel.setTextColor(Color.BLACK);
-            et_j_blueHexNum.setTextColor(Color.BLACK);
-            lbl_j_hexLabel.setTextColor(Color.BLACK);
-            et_j_hexCode.setTextColor(Color.BLACK);
-        } */
+            lbl_j_redLabel.setTextColor(x);
+            et_j_redHexNum.setTextColor(x);
+            lbl_j_greenLabel.setTextColor(x);
+            et_j_greenHexNum.setTextColor(x);
+            lbl_j_blueLabel.setTextColor(x);
+            et_j_blueHexNum.setTextColor(x);
+            lbl_j_hexLabel.setTextColor(x);
+            et_j_hexCode.setTextColor(x);
     }
 
     private void addColorButtonListener()
@@ -271,11 +284,19 @@ private void seekBarChangeListener()
                 int green = Integer.valueOf(et_j_greenHexNum.getText().toString());
                 int blue = Integer.valueOf(et_j_blueHexNum.getText().toString());
 
-                MyColor newColor = new MyColor(red, green, blue);
+                ColorInfo newColor = new ColorInfo(red, green, blue);
 
                 listOfColors.add(newColor);
                 adapter.notifyDataSetChanged();
                 Log.d("Color Call", "Called");
+
+                sb_j_redSeekBar.setProgress(0);
+                sb_j_greenSeekBar.setProgress(0);
+                sb_j_blueSeekBar.setProgress(0);
+
+                changeBackgroundColor(Color.WHITE);
+
+                changeTextColorBack(Color.BLACK);
             }
         });
     }
@@ -288,17 +309,18 @@ private void seekBarChangeListener()
 
     private void addDummyDataToList()
     {
-        MyColor newColor = new MyColor(255, 25, 65);
+        ColorInfo newColor = new ColorInfo(255, 25, 65);
         listOfColors.add(newColor);
 
-        newColor = new MyColor(156, 63, 1);
+        newColor = new ColorInfo(156, 63, 1);
         listOfColors.add(newColor);
     }
 
     private int makeTextColor(int red, int green, int blue)
     {
         //return Color.rgb(255 - red, 255 - green, 255 - blue);
-        return (127 < ((red + green + blue) / 3)) ? Color.WHITE : Color.BLACK;
+        return (127 < ((red + green + blue) / 3)) ? Color.BLACK : Color.WHITE;
         //int x = (y < z) ? a : b;
     }
+
 }

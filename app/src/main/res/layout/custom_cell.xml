@@ -4,46 +4,60 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/customcell_backgroud"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="300px">
 
     <TextView
-        android:id="@+id/tv_v_customRed"
+        android:id="@+id/tv_v_customGreen"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="5dp"
+        android:layout_marginEnd="25dp"
         android:text="TextView"
         android:textColor="@color/black"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/customGreenLabel"
-        app:layout_constraintStart_toEndOf="@+id/customRedLabel"
-        app:layout_constraintTop_toTopOf="@+id/customGreenLabel" />
+        app:layout_constraintBottom_toBottomOf="@+id/customBlueLabel"
+        app:layout_constraintEnd_toStartOf="@+id/customBlueLabel"
+        app:layout_constraintStart_toEndOf="@+id/customGreenLabel"
+        app:layout_constraintTop_toTopOf="@+id/customBlueLabel" />
+
+    <TextView
+        android:id="@+id/tv_v_customBlue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBaseline_toBaselineOf="@+id/customBlueLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/customBlueLabel" />
+
+    <TextView
+        android:id="@+id/customBlueLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Blue: "
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/tv_v_customBlue"
+        app:layout_constraintStart_toEndOf="@+id/tv_v_customGreen"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/customRedLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="4dp"
         android:text="Red: "
         android:textColor="@color/black"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBaseline_toBaselineOf="@+id/tv_v_customRed"
         app:layout_constraintEnd_toStartOf="@+id/tv_v_customRed"
+        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/tv_v_customBlue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="68dp"
-        android:text="TextView"
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/customGreenLabel"
@@ -54,56 +68,47 @@
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBaseline_toBaselineOf="@+id/tv_v_customGreen"
-        app:layout_constraintEnd_toStartOf="@+id/tv_v_customGreen" />
+        app:layout_constraintEnd_toStartOf="@+id/tv_v_customGreen"
+        app:layout_constraintStart_toEndOf="@+id/tv_v_customRed" />
 
     <TextView
-        android:id="@+id/tv_v_customGreen"
+        android:id="@+id/tv_v_customRed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="5dp"
+        android:layout_marginEnd="16dp"
         android:text="TextView"
         android:textColor="@color/black"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/customBlueLabel"
-        app:layout_constraintTop_toTopOf="@+id/customBlueLabel" />
-
-    <TextView
-        android:id="@+id/customBlueLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Blue: "
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintBaseline_toBaselineOf="@+id/tv_v_customBlue"
-        app:layout_constraintEnd_toStartOf="@+id/tv_v_customBlue" />
-
-    <TextView
-        android:id="@+id/tv_v_customHex"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="59dp"
-        android:layout_marginTop="25dp"
-        android:layout_marginEnd="59dp"
-        android:text="TextView"
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/customGreenLabel"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_v_customRed" />
+        app:layout_constraintBottom_toBottomOf="@+id/customGreenLabel"
+        app:layout_constraintEnd_toStartOf="@+id/customGreenLabel"
+        app:layout_constraintStart_toEndOf="@+id/customRedLabel"
+        app:layout_constraintTop_toTopOf="@+id/customGreenLabel" />
 
     <TextView
         android:id="@+id/customHexLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
+        android:layout_marginStart="21dp"
         android:text="Hex: "
         android:textColor="@color/black"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/tv_v_customHex"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tv_v_customHex"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_v_customHex"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="25dp"
+        android:text="TextView"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/customHexLabel"
         app:layout_constraintTop_toBottomOf="@+id/tv_v_customRed" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
